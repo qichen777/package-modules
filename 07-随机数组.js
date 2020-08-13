@@ -6,4 +6,6 @@ function randomArr(arr) {
   return newArr;
 }
 
+
+//例子
 console.log(randomArr([1,2,3,4,5]));

@@ -21,7 +21,6 @@ dataPromise.then((value1) => {
   data2Promise.then((value2) => {
     // data2的value拿到了 继续调用next并且传递value2
     gen.next(value2)
-
     // console.log('data2: ', data2);
     // 此时就会打印出data2
   })

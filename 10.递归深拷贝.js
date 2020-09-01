@@ -1,8 +1,8 @@
-function isObj(obj) {
-  return (typeof obj === 'object' || typeof obj === 'function') && (obj !== null)
-}
 // 解决 深拷贝中正则 日期对象无法拷贝的问题
 function clone(obj, hash = new WeakMap()) {
+  let isObj = function(obj) {
+    return (typeof obj === 'object' || typeof obj === 'function') && (obj !== null)
+  }
   let tempobj, constructor
   constructor = obj.constructor
   switch (constructor) {

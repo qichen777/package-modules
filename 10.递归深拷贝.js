@@ -1,19 +1,30 @@
-function deepClone(obj) {
-  let objClone = Array.isArray(obj) ? [] : {}
-  if (obj && typeof obj === 'object') {
-    for (key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        //判断obj子元素是否为对象 如果是 递归复制
-        if (obj[key] && typeof obj[key] === 'object') {
-          objClone[key] = deepClone(obj[key])
-        } else {
-          objClone[key] = obj[key]
-        }
-      }
-    }
-  }
-  return objClone;
+function isObj(obj) {
+  return (typeof obj === 'object' || typeof obj === 'function') && (obj !== null)
 }
+// 解决 深拷贝中正则 日期对象无法拷贝的问题
+function clone(obj, hash = new WeakMap()) {
+  let tempobj, constructor
+  constructor = obj.constructor
+  switch (constructor) {
+    case RegExp:
+      tempobj = new constructor(obj)
+      break;
+    case Date:
+      tempobj = new constructor(obj)
+      break;
+    default:
+      if (hash.has(obj)) return hash.get(obj)
+      tempobj = Array.isArray(obj) ? [] : {}
+      hash.set(obj, tempobj)
+  }
+  for (let key in obj) {
+    tempobj[key] = isObj(obj[key]) ? clone((obj[key]), hash) : obj[key]
+  }
+  return tempobj
+}    
+
+
+
 
 let obj = {
   name: 'chen',
@@ -31,7 +42,7 @@ let obj = {
 // let obj2 = JSON.parse(JSON.stringify(obj))
 
 // 封装的深拷贝
-let obj2 = deepClone(obj);
+let obj2 = clone(obj);
 
 // 显示结果
 obj2.name = 'qi';

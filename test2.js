@@ -1,1 +1,9 @@
-console.log(222)
+<template name="msgItem">
+  <view>
+    <text>
+      {" "}
+      {{ index }}: {{ msg }}{" "}
+    </text>
+    <text> Time: {{ time }} </text>
+  </view>
+</template>;
